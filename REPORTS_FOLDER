@@ -1,1 +1,116 @@
+1. Introduction
 
+The Gym Management System is a relational database project designed to manage the day-to-day operations of a gym. The main purpose of this system is to store, organize, and retrieve information about members, trainers, classes, memberships, and payments efficiently.
+This project demonstrates practical applications of SQL database design, including table creation, data integrity constraints, joins, views, stored procedures, and advanced queries. It also provides a hands-on example of working with MySQL Workbench and version control using GitHub.
+
+2. Database Design
+The system consists of five main tables:
+Members – stores personal information about gym members, including contact details and join date.
+Trainers – stores information about trainers and their specialties.
+Classes – stores details of gym classes, schedules, and assigned trainers.
+Memberships – stores membership information, linking members to membership types, start/end dates, and prices.
+Payments – stores payment history for each member, including amount, date, and payment method.
+
+Relationships
+
+Each member can have one active membership at a time.
+Each class is assigned to one trainer, but a trainer can conduct multiple classes.
+Payments are linked to members, allowing tracking of their financial transactions.
+
+3. ERD Diagram
+
+
+ERD Diagram showing all tables, primary and foreign keys, and relationships.
+
+(In Word/Google Docs: Insert the image here. In PDF export, it will appear inline.)
+
+4. Implementation
+Tools Used
+
+MySQL Workbench 8.0 – for database design, creation, and query testing
+
+GitHub – for version control and project hosting
+
+SQL Scripts – exported from Workbench, containing all schema, data, views, and procedures
+
+Key Features Implemented
+
+Tables & Constraints
+
+Primary keys for unique identification
+
+Foreign keys to enforce relationships (e.g., memberships.member_id references members.member_id)
+
+Check constraints for valid values (e.g., positive prices, valid membership types)
+
+Default values for certain columns
+
+Views
+
+Created views for easier access to frequently used queries, such as active members with current memberships
+
+Stored Procedures & Functions
+
+Stored procedures to automate repetitive tasks, such as calculating total payments of a member
+
+Advanced Queries
+
+Subqueries to retrieve members with memberships expiring within a certain period
+
+GROUP BY and ROLLUP for aggregated reports, like total payments per membership type
+
+5. Sample Queries & Results
+
+1. List all active members with their membership type:
+
+SELECT m.first_name, m.last_name, ms.membership_type, ms.end_date
+FROM members m
+JOIN memberships ms ON m.member_id = ms.member_id
+WHERE ms.end_date >= CURDATE();
+
+
+Result: Shows members whose memberships have not expired.
+
+2. Total payments per membership type:
+
+SELECT ms.membership_type, SUM(p.amount) AS total_payment
+FROM memberships ms
+JOIN payments p ON ms.member_id = p.member_id
+GROUP BY ms.membership_type WITH ROLLUP;
+
+
+Result: Aggregated report including subtotals for all membership types.
+
+3. Find members with memberships expiring this month:
+
+SELECT first_name, last_name, end_date
+FROM members m
+JOIN memberships ms ON m.member_id = ms.member_id
+WHERE MONTH(ms.end_date) = MONTH(CURDATE());
+
+6. How to Use the Project
+
+Open MySQL Workbench
+Import the SQL file located in the /sql folder:
+workbench_export.sql – contains all tables, data, views, and procedures
+Execute the SQL script to create the database
+Run queries, views, or stored procedures as needed to explore the database
+
+7. Conclusion
+
+This project demonstrates a complete relational database workflow from design to implementation. 
+Key skills developed include:
+Creating tables with constraints
+Establishing relationships between tables
+Writing advanced SQL queries with joins, subqueries, and aggregation
+Using views and stored procedures to simplify queries
+Exporting and documenting a project professionally
+Future improvements could include:
+A front-end interface for easier member and class management
+Triggers to automate tasks like updating membership status
+More detailed reports and analytics for gym management
+
+8. References
+MySQL Documentation – https://dev.mysql.com/doc/
+GitHub Guides – https://docs.github.com/en
+Class lectures and assignments
