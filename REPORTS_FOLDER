@@ -19,44 +19,29 @@ Payments are linked to members, allowing tracking of their financial transaction
 
 3. ERD Diagram
 
-
 ERD Diagram showing all tables, primary and foreign keys, and relationships.
-
 (In Word/Google Docs: Insert the image here. In PDF export, it will appear inline.)
 
 4. Implementation
 Tools Used
-
 MySQL Workbench 8.0 – for database design, creation, and query testing
-
 GitHub – for version control and project hosting
-
 SQL Scripts – exported from Workbench, containing all schema, data, views, and procedures
-
 Key Features Implemented
 
 Tables & Constraints
-
 Primary keys for unique identification
-
 Foreign keys to enforce relationships (e.g., memberships.member_id references members.member_id)
-
 Check constraints for valid values (e.g., positive prices, valid membership types)
-
 Default values for certain columns
 
 Views
 
 Created views for easier access to frequently used queries, such as active members with current memberships
-
 Stored Procedures & Functions
-
 Stored procedures to automate repetitive tasks, such as calculating total payments of a member
-
 Advanced Queries
-
 Subqueries to retrieve members with memberships expiring within a certain period
-
 GROUP BY and ROLLUP for aggregated reports, like total payments per membership type
 
 5. Sample Queries & Results
@@ -67,8 +52,6 @@ SELECT m.first_name, m.last_name, ms.membership_type, ms.end_date
 FROM members m
 JOIN memberships ms ON m.member_id = ms.member_id
 WHERE ms.end_date >= CURDATE();
-
-
 Result: Shows members whose memberships have not expired.
 
 2. Total payments per membership type:
@@ -77,8 +60,6 @@ SELECT ms.membership_type, SUM(p.amount) AS total_payment
 FROM memberships ms
 JOIN payments p ON ms.member_id = p.member_id
 GROUP BY ms.membership_type WITH ROLLUP;
-
-
 Result: Aggregated report including subtotals for all membership types.
 
 3. Find members with memberships expiring this month:
