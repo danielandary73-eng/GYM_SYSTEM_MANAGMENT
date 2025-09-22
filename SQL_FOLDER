@@ -1,2 +1,3 @@
-
-sddd
+rm -rf reports
+git add -A
+git commit -m "Delete reports folder"
